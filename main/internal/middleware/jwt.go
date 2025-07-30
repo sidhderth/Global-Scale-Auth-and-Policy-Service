@@ -18,7 +18,7 @@ func NewJWTMiddleware(jwksURL string) (*JWTMiddleware, error) {
 	if err != nil {
 		return nil, err
 	}
-	return &JWTMiddleware{}, nil
+	return &JWTMiddleware{keySet : set}, nil
 }
 
 func (m *JWTMiddleware) Handler() gin.HandlerFunc {
@@ -28,17 +28,26 @@ func (m *JWTMiddleware) Handler() gin.HandlerFunc {
 			c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"error" : "missing/malformed token"})
 			return
 		}
-		tokenString := strings.TrimPrefix("Bearer ", auth)
+		tokenString := strings.TrimPrefix(auth, "Bearer")
 		token, err := jwt.Parse(tokenString, func(t *jwt.Token) (interface{}, error) {
-			kid := t.Header.Get("kid")
-			key, ok = m.keySet.LookupKeyID(kid)
+			kidVal, ok := t.Header["kid"]
 			if !ok {
+    			return nil, jwt.ErrTokenMalformed
+			}
+			kid, ok := kidVal.(string)
+			if !ok {
+			    return nil, jwt.ErrTokenMalformed
+			}
+			// then lookup:
+			key, found := m.keySet.LookupKeyID(kid)
+
+			if !found {
 				return nil, jwt.ErrTokenMalformed
 			}
 			var pubkey interface{}
 			return pubkey, key.Raw(&pubkey)
 		})
-		if err != nil || !token.valid {
+		if err != nil || !token.Valid {
 			c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"error" : "invalid token"})
 			return
 		}

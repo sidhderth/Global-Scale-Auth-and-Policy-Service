@@ -1,7 +1,7 @@
 package middleware
 
-import "github.com/gin-gonic/gin"
+//import "github.com/gin-gonic/gin"
 
-func OPAMiddleware(policyPath string) gin.HanlderFunc {
-	return func(c *gin.Context) {c.Next()}
-}
+//func OPAMiddleware(policyPath string) gin.HandlderFunc {
+//	return func(c *gin.Context) {c.Next()}
+//}

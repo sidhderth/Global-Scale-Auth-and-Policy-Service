@@ -9,12 +9,22 @@ import (
 )
 
 func main() {
+	jwks := os.Getenv("JWKS_URL")
+	if jwks == "" {
+		jwks = "http://localhost:8081/realms/demo/protocol/openid-connect/certs"
+	}
+	jwtMw, err := middleware.NewJWTMiddleware(jwks)
+	if err != nil {
+		log.Fatalf("JWT Middleware init error : %v", err)
+	}
+
 	router := gin.Default()
-	//TODO: add router.Use(jwtMw.Handler()), router.Use(opaMw)
+	router.Use(jwtMw.Handler())
+	// TODO: router.Use(opaMw)
 
 	router.GET("/hello", handlers.HelloREST)
 
-	port := os.Getnv("PORT")
+	port := os.Getenv("PORT")
 	if port == "" {
 		port = "8080"
 	}
