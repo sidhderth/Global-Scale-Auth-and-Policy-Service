@@ -10,5 +10,5 @@ func NewJWTMiddleware(jwksURL string) (*JWTMiddleware, error) {
 }
 
 func (m *JWTMiddleware) Handler() gin.HandlerFunc {
-	return fucn(c *gin.Context) {c.Next()}
+	return func(c *gin.Context) {c.Next()}
 }
