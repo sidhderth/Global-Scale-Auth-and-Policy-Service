@@ -4,8 +4,8 @@ import (
 	"log"
 	"os"
 	"github.com/gin-gonic/gin"
-	"github.com/sidhderth/main/internal/handlers"
-	"github.com/sidhderth/main/internal/middleware"
+	"github.com/sidhderth/internal/handlers"
+	"github.com/sidhderth/internal/middleware"
 )
 
 func main() {
