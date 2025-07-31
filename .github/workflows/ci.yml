@@ -36,8 +36,8 @@ jobs:
     - name: Build & Push Docker Image
       uses: docker/build-push-action@v3
       with:
-        context: ./main
-        file: ./main/Dockerfile
+        context: .
+        file: Dockerfile
         push: true
         tags: ghcr.io/${{ github.actor }}/authz-rest:latest
         build-args: |
