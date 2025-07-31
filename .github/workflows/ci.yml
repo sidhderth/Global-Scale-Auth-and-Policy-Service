@@ -12,7 +12,7 @@ jobs:
     env:
       IMAGE_NAME: authz-rest
       REGISTRY: ghcr.io
-      REPOSITORY: ${{ sidhderth/main }}
+      REPOSITORY: ${{ github.repository }}
 
     steps:
     - name: Checkout code
