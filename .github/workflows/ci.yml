@@ -39,7 +39,7 @@ jobs:
         context: ./main
         file: ./main/Dockerfile
         push: true
-        tags: ghcr.io/${{ github.repositoryOwner }}/authz-rest:latest
+        tags: ghcr.io/${{ github.actor }}/authz-rest:latest
         build-args: |
           JWKS_URL=http://localhost:8081/realms/demo/protocol/openid-connect/certs
         
