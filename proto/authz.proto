@@ -1,0 +1,14 @@
+syntax = "proto3";
+
+package authz;
+
+import "google/protobuf/struct.proto";
+
+option go_package = "github.com/sidhderth/internal/gen/authz";
+
+message Input {
+    google.protobuf.Struct claims = 1;
+
+    string method = 2;
+    repeated string path = 3;
+}

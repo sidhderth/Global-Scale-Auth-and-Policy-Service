@@ -18,9 +18,14 @@ func main() {
 		log.Fatalf("JWT Middleware init error : %v", err)
 	}
 
+	opaMw, err := middleware.NewOPAMiddleware("policy/authz.rego")
+	if err != nil {
+		log.Fatalf("OPA Middleware init error: %v", err)
+	}
+
 	router := gin.Default()
 	router.Use(jwtMw.Handler())
-	// TODO: router.Use(opaMw)
+	router.Use(opaMw.Handler())
 
 	router.GET("/hello", handlers.HelloREST)
 
