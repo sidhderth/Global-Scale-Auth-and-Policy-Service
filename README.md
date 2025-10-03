@@ -15,6 +15,10 @@ JWT-secured REST API in Go with **Keycloak** for authentication and **OPA/Rego**
 
 ## Architecture
 Client ──HTTP──> Gin Router
+
 ├── JWT Middleware (validate token via JWKS) ── 401 on fail
+
 ├── OPA Middleware (evaluate Rego policy) ── 403 on deny
+
 └── /hello Handler (returns JSON on success)
+
